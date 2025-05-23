@@ -1,0 +1,28 @@
+// tsconfig.eslint.json
+{
+  "extends": "./tsconfig.json", // Extiende tu configuración principal de TypeScript
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.d.ts"
+    // Asegúrate de incluir cualquier otra ruta donde ESLint deba verificar archivos
+    // Por ejemplo, si tienes scripts o configuraciones TS fuera de src:
+    // "config/**/*.ts",
+    // ".drizzle/**/*.ts" // Si .drizzle tiene archivos TS que ESLint debe revisar
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    ".drizzle/",
+    ".eslintrc.cjs",
+    ".prettierrc.cjs",
+    "commitlint.config.cjs",
+    "eslint.config.js",
+    "vite.config.ts"
+  ]
+}
