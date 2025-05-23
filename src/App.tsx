@@ -2,7 +2,7 @@ import './App.css';
 function App() {
   return (
     <>
-      <h1>Sergio1 Casallas</h1>
+      <h1>Sergio Casallas</h1>
     </>
   );
 }
