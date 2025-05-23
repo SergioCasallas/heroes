@@ -1,9 +1,9 @@
-    // commitlint.config.cjs
-    module.exports = {
-        extends: ['@commitlint/config-conventional'],
-        // Puedes añadir reglas personalizadas aquí si lo deseas
-        // rules: {
-        //   'header-max-length': [2, 'always', 100], // Ejemplo: Limitar la longitud del encabezado a 100 caracteres
-        // }
-      };
-      
+// commitlint.config.js
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  // Puedes añadir tus propias reglas aquí si necesitas personalizar el comportamiento
+  rules: {
+    // Ejemplo: requerir que el cuerpo del mensaje tenga al menos 10 caracteres
+    // 'body-min-length': [2, 'always', 10]
+  }
+};

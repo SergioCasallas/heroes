@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "preview": "vite preview",
+    "lint-staged": "lint-staged",
     "prepare": "husky",
     "test": "vitest"
   },
