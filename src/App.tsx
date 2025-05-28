@@ -1,9 +1,9 @@
-import './App.css';
+import SectionHeroes from './pages/SectionHeroes.tsx';
 
 function App() {
   return (
     <>
-      <h1>Sergio Casallas</h1>
+      <SectionHeroes />
     </>
   );
 }

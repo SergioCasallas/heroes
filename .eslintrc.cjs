@@ -1,72 +1,90 @@
 // .eslintrc.cjs
 module.exports = {
-  // Entorno de ejecución: Navegador y Node.js (para cosas como Webpack/Vite config)
   env: {
     browser: true,
     node: true,
-    es2021: true, // Habilitar características de ECMAScript 2021
+    es2021: true,
   },
-  // Analizador: TypeScript
   parser: '@typescript-eslint/parser',
-  // Opciones del analizador: Para TypeScript
   parserOptions: {
-    ecmaVersion: 'latest', // La versión de ECMAScript más reciente
-    sourceType: 'module', // Usar módulos ES
-    ecmaFeatures: {
-      jsx: true, // Habilitar JSX para React
-    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    ecmaFeatures: { jsx: true },
+    project: './tsconfig.eslint.json',
+    tsconfigRootDir: __dirname,
   },
-  // Plugins: Extensiones para ESLint
   plugins: [
-    '@typescript-eslint', // Reglas específicas de TypeScript
-    'react', // Reglas específicas de React
-    'react-hooks', // Reglas específicas de React Hooks
-    'jsx-a11y', // Reglas de accesibilidad para JSX
-    'prettier', // Integración con Prettier
+    '@typescript-eslint',
+    'react',
+    'react-hooks',
+    'jsx-a11y',
+    'prettier',
+    'import',
   ],
-  // Extends: Conjuntos de reglas predefinidas
   extends: [
-    'eslint:recommended', // Reglas básicas recomendadas de ESLint
-    'plugin:@typescript-eslint/recommended', // Reglas recomendadas de TypeScript ESLint
-    'plugin:@typescript-eslint/recommended-requiring-type-checking', // Reglas que requieren información de tipos (más estrictas)
-
-    // React
-    'plugin:react/recommended', // Reglas recomendadas de React
-    'plugin:react-hooks/recommended', // Reglas recomendadas de React Hooks
-    'plugin:jsx-a11y/recommended', // Reglas recomendadas de accesibilidad para JSX
-
-    // Último: Desactiva las reglas de ESLint que entran en conflicto con Prettier
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
   ],
-  // Reglas personalizadas: Sobrescribe o añade reglas específicas
   rules: {
-    // Reglas de TypeScript
-    '@typescript-eslint/explicit-module-boundary-types': 'off', // No requerir tipos explícitos para funciones exportadas
-    '@typescript-eslint/no-explicit-any': 'warn', // Advertir sobre el uso de 'any'
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Advertir sobre variables no usadas (ignorar las que empiezan con '_')
-    '@typescript-eslint/no-shadow': 'error', // Prohibir el sombreado de variables (definir una variable con el mismo nombre que una en un scope exterior)
-
-    // Reglas de React
-    'react/react-in-jsx-scope': 'off', // No requerir `import React from 'react'` en cada archivo JSX (para React 17+)
-    'react/prop-types': 'off', // Desactivar la verificación de propTypes (ya que usamos TypeScript)
-    'react/jsx-uses-react': 'off', // Desactiva la comprobación de 'React' en JSX (para React 17+)
-    'react/self-closing-comp': ['error', { component: true, html: true }], // Auto-cerrar componentes y elementos HTML vacíos
-    'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }], // No usar llaves en JSX a menos que sea necesario
-
-    // Reglas generales (no específicas de TS o React)
-    'no-console': ['warn', { allow: ['warn', 'error'] }], // Permitir console.warn y console.error, pero advertir sobre console.log
-    'no-debugger': 'error', // Prohibir el uso de 'debugger'
-    'no-unused-vars': 'off', // Desactivar esta regla de ESLint base, ya que @typescript-eslint/no-unused-vars la maneja mejor
-    'prefer-const': 'error', // Requerir 'const' para variables que no se reasignan
-    'array-callback-return': 'error', // Requerir que las funciones de callback de array devuelvan un valor
-
-    // Reglas de Prettier: Asegúrate de que Prettier formatee el código
+    // TS
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-shadow': 'error',
+    // React
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/self-closing-comp': ['error', { component: true, html: true }],
+    'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
+    // Generales
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-debugger': 'error',
+    'no-unused-vars': 'off',
+    'prefer-const': 'error',
+    'array-callback-return': 'error',
+    // Prettier
     'prettier/prettier': 'error',
+    // Import extensions solo para paquetes (alias y archivos TS los ignora)
+    'import/extensions': ['error', 'ignorePackages', {
+      js: 'never', jsx: 'never', ts: 'never', tsx: 'never'
+    }],
   },
-  // Configuración para archivos específicos
   settings: {
-    react: {
-      version: 'detect', // Detectar automáticamente la versión de React
-    },
+    react: { version: 'detect' },
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+    'import/resolver': {
+      // 1️⃣ Resolver Node nativo (para .ts/.tsx/.js/.jsx)
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      },
+      // 2️⃣ Resolver TypeScript (lee paths de tsconfig.json)
+      typescript: {
+        project: './tsconfig.eslint.json',
+        alwaysTryTypes: true
+      },
+      // 3️⃣ Resolver de alias @ → ./src
+      alias: {
+        map: [['@', './src']],
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }
+    }
   },
+  overrides: [
+    {
+      // Desactivar import/extensions en archivos TS/TSX
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'import/extensions': 'off'
+      }
+    }
+  ]
 };
