@@ -1,11 +1,9 @@
-import SectionHeroes from './pages/SectionHeroes.tsx';
+import './styles/globals.css';
+
+import Home from './pages/Home/index.tsx';
 
 function App() {
-  return (
-    <>
-      <SectionHeroes />
-    </>
-  );
+  return <Home />;
 }
 
 export default App;
