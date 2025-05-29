@@ -1,6 +1,6 @@
 // tsconfig.eslint.json
 {
-  "extends": "./tsconfig.json", // Extiende tu configuración principal de TypeScript
+  "extends": "./tsconfig.json",
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",

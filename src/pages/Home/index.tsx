@@ -9,16 +9,6 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
-  // const [pageData, setPageData] = useState<HeroPage>({
-  //   length: 0,
-  //   size: 10,
-  //   page: 1,
-  //   firstPage: 1,
-  //   lastPage: 1,
-  //   items: [],
-  // });
-  // const [loading, setLoading] = useState(false);
-
   const { data: heroPage, isLoading } = useCustomQuery([QUERY_KEYS.HEROES, currentPage], () =>
     getAllForPage(currentPage, pageSize),
   );

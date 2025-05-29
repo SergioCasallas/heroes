@@ -7,10 +7,8 @@ export interface ApiError {
   message: string;
   statusCode?: number;
   code?: string;
-  // Puedes añadir más campos según la estructura de error de tu backend
 }
 
-// Tipo para datos de creación/actualización de usuario (sin ID)
 export type CreateHeroPayload = Omit<HeroItem, 'id'>;
 export type UpdateHeroPayload = Partial<Omit<HeroItem, 'id'>>; // Partial para que todos los campos sean opcionales en la actualización
 

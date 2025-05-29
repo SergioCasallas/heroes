@@ -5,15 +5,9 @@ import tsEslint from 'typescript-eslint';
 import pluginImport from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import prettierConfig from 'eslint-config-prettier'; // Para deshabilitar reglas de ESLint que choquen con Prettier
-// Si airbnb-typescript/base expone un objeto de configuración plana, impórtalo aquí.
-// Ejemplo: import airbnbBase from 'eslint-config-airbnb-typescript/base';
-// Si no, tendremos que aplicar sus reglas manualmente o buscar su alternativa flat config.
+import prettierConfig from 'eslint-config-prettier';
 
 export default tsEslint.config(
-  // === 1. Configuración de archivos IGNORED GLOBALMENTE ===
-  // Esto se aplica antes de cualquier otra configuración para excluir archivos.
-  // Es redundante si ya lo tienes en tsconfig.eslint.json, pero no hace daño.
   {
     ignores: [
       'dist/',
@@ -30,22 +24,15 @@ export default tsEslint.config(
     ],
   },
 
-  // === 2. Configuración para ARCHIVOS DE CONFIGURACIÓN (.js, .cjs, .ts en la raíz) ===
-  // Estos archivos NO deben usar parserOptions.project
   {
     files: [
       '*.js',
       '*.cjs',
       '*.mjs',
-      // Si tienes archivos de configuración TypeScript en la raíz, como vite.config.ts
       '*.ts', // O especificar individualmente si solo son algunos: "vite.config.ts", etc.
     ],
-    // Asegúrate de que los archivos específicos que dan el error estén aquí.
-    // Ej: ".eslintrc.cjs", ".prettierrc.cjs", "commitlint.config.cjs", "eslint.config.js", "vite.config.ts"
-
-    // IMPORTANTE: NO uses parserOptions.project en este bloque.
     languageOptions: {
-      parser: tsEslint.parser, // Usa el parser de TS para la sintaxis, pero sin comprobación de tipos
+      parser: tsEslint.parser,
       globals: {
         ...globals.node, // Los archivos de configuración son de Node.js
       },
@@ -56,7 +43,6 @@ export default tsEslint.config(
     },
     extends: [
       tsEslint.configs.disableTypeChecked, // Deshabilita todas las reglas de comprobación de tipos
-      // prettierConfig, // Si quieres que Prettier aplique formato a estos archivos
     ],
     rules: {
       'prettier/prettier': 'error', // Forzar formato
@@ -67,16 +53,11 @@ export default tsEslint.config(
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/restrict-template-expressions': 'off',
       'import/no-anonymous-default-export': 'off',
-      // Puedes desactivar otras reglas aquí que no sean relevantes para archivos de config
     },
   },
 
-  // === 3. Configuración para tus ARCHIVOS DE CÓDIGO FUENTE (.ts, .tsx, .js, .jsx en src/) ===
-  // Aquí es donde aplicamos parserOptions.project
   {
     files: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.js', 'src/**/*.jsx'],
-    // Asegúrate de que estos archivos no estén en la sección 'ignores' global si quieres lintarlos
-    // Y que tu tsconfig.eslint.json los incluya.
     plugins: {
       '@typescript-eslint': tsEslint.plugin,
       import: pluginImport,
@@ -87,7 +68,6 @@ export default tsEslint.config(
       parser: tsEslint.parser,
       parserOptions: {
         project: './tsconfig.eslint.json',
-        // tsconfigRootDir: import.meta.dirname, // Descomentar si tu project path no se resuelve bien
       },
       globals: {
         ...globals.node,
@@ -97,9 +77,6 @@ export default tsEslint.config(
     extends: [
       tsEslint.configs.recommended, // Reglas de @typescript-eslint recomendadas
       prettierConfig, // Integración con Prettier
-      // Aquí iría tu integración de airbnb-typescript/base
-      // Si tienes un objeto de configuración plana de airbnb, lo pones aquí.
-      // Ejemplo: ...airbnbBase,
     ],
     rules: {
       'prettier/prettier': 'error',

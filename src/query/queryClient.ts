@@ -9,19 +9,11 @@ const queryClient = new QueryClient({
       // cacheTime: 1000 * 60 * 60,
       refetchOnWindowFocus: true,
       retry: 2,
-      // Aquí podemos tipar el error si lo deseas, aunque useQuery ya lo infiere bien
-      // de la queryFn. Pero para onError global, es útil:
-      // onError: (error: ApiError) => {
-      //   console.error("Error en la consulta:", error.message);
-      // }
     },
     mutations: {
-      // Opciones por defecto para las mutaciones
-      // Tipando el error de la mutación
       onError: (error: ApiError) => {
         // eslint-disable-next-line no-console
         console.error('Error en la mutación:', error.message);
-        // Aquí puedes agregar lógica global para mostrar notificaciones de error
       },
     },
   },

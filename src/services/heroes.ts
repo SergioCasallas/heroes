@@ -21,7 +21,7 @@ export const getOne = async (id: number): Promise<HeroItem> => {
   return data;
 };
 
-// Futuras implementaciones
+//!Futuras implementaciones
 // export const post = async (hero: HeroItem): Promise<HeroItem> => {
 //   const { data } = await axios.post<HeroItem>(`${API_BASE_URL}/heroes`, hero);
 //   return data;
