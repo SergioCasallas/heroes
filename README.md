@@ -70,6 +70,42 @@ El proyecto está en desarrollo activo y actualmente implementa las siguientes f
 - Componentes UI accesibles usando Radix UI
 - Caché y gestión de estado con React Query
 
+## Posibilidades de Mejora
+
+1. **Funcionalidades Pendientes**
+
+   - Implementación de CRUD completo para héroes
+   - Sistema de búsqueda avanzada
+   - Filtros y ordenamiento avanzado
+   - Sistema de favoritos
+
+2. **Optimización y Mejoras Técnicas**
+
+   - Implementación de lazy loading para imágenes
+   - Caching más eficiente con React Query
+   - Optimización de rendimiento en listados largos
+   - Implementación de dark mode
+
+3. **Testing**
+
+   - Implementación de pruebas unitarias
+   - Pruebas de integración
+   - Pruebas E2E
+   - Mejor cobertura de pruebas
+
+4. **Seguridad**
+
+   - Implementación de autenticación
+   - Validación de datos más robusta
+   - Manejo de errores mejorado
+   - Protección contra XSS y CSRF
+
+5. **UX/UI**
+   - Mejoras en la accesibilidad
+   - Animaciones y transiciones
+   - Loading states más robustos
+   - Mejor feedback visual
+
 ## Contribución
 
 1. Crea un branch para tu feature (`git checkout -b feature/amazing-feature`)
