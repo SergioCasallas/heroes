@@ -2,6 +2,12 @@
 
 Aplicación web moderna para gestionar héroes usando React, TypeScript y Vite.
 
+## Versión en Producción
+
+La aplicación está disponible en producción en:
+
+[https://heroes-phi.vercel.app/](https://heroes-phi.vercel.app/)
+
 ## Características Principales
 
 - 🚀 **Frontend Moderno**: Construido con React y TypeScript
