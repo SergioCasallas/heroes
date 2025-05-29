@@ -1,0 +1,102 @@
+INSTRUCCIONES DE INSTALACIÓN Y USO DE LA APLICACIÓN DE GESTIÓN DE HÉROES
+
+1. REQUISITOS PREVIOS
+- Node.js (versión 18 o superior)
+- pnpm (recomendado usar pnpm)
+
+2. INSTALACIÓN
+a) Opción 1: Instalación desde GitHub
+   ```bash
+   git clone https://github.com/SergioCasallas/heroes.git
+   cd heroes
+   pnpm install
+   ```
+
+b) Opción 2: Instalación desde archivo ZIP
+   1. Extraer el contenido del archivo ZIP
+   2. Abrir una terminal en la carpeta extraída
+   3. Ejecutar: `pnpm install`
+
+3. CONFIGURACIÓN DEL ENTORNO
+a) Configurar variables de entorno:
+   1. Copiar el archivo de ejemplo:
+      ```bash
+      cp .env.example .env
+      ```
+   2. Editar el archivo .env con los siguientes valores:
+      ```
+      VITE_API_BASE_URL="https://ea1w717ym2.execute-api.us-east-1.amazonaws.com/api"
+      VITE_ENV="development"
+      ```
+
+4. EJECUTAR LA APLICACIÓN
+a) Modo desarrollo (recomendado para pruebas)
+   ```bash
+   pnpm dev
+   ```
+   La aplicación se iniciará automáticamente en http://localhost:5173
+
+b) Modo producción
+   ```bash
+   # Compilar la aplicación
+   pnpm build
+   
+   # Previsualizar la versión de producción
+   pnpm preview
+   ```
+
+5. USO DE LA APLICACIÓN
+La aplicación es una interfaz web moderna para la gestión de héroes y sus poderes. Sus principales características incluyen:
+
+- Gestión de héroes:
+  * Ver detalles completos de cada héroe
+
+- Manejo de poderes:
+  * Ver estadísticas de poderes
+
+- Reportes y estadísticas:
+  * Visualización de datos de héroes
+  * Estadísticas de poderes
+
+Para usar la aplicación:
+1. Abre tu navegador web
+2. Ingresa a http://localhost:5173
+3. La interfaz web se abrirá automáticamente
+4. Navega por las diferentes secciones usando el menú lateral
+
+6. TROUBLESHOOTING
+Si encuentras algún error, sigue estos pasos:
+
+a) Verificación de Node.js:
+   ```bash
+   node --version
+   ```
+   Debe mostrar una versión 18 o superior
+
+b) Verificación de pnpm:
+   ```bash
+   pnpm --version
+   ```
+
+c) Verificación de dependencias:
+   ```bash
+   pnpm list
+   ```
+
+d) Verificación de configuración:
+   - Asegúrate de que el archivo .env existe
+   - Verifica que las variables de entorno están correctas
+
+7. MANTENIMIENTO Y ACTUALIZACIONES
+- Para actualizar la aplicación:
+  ```bash
+  git pull
+  pnpm install
+  ```
+
+- Para limpiar la caché:
+  ```bash
+  pnpm clean
+  ```
+
+Para más información detallada, consulta el README.md del proyecto.

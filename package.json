@@ -12,7 +12,7 @@
     "lint-staged": "lint-staged",
     "prepare": "husky",
     "test": "vitest",
-    "clean": "rm -rf node_modules && rm -rf .pnpm-lock.yaml && rm -rf dist && pnpm install"
+    "clean": "rm -rf node_modules && rm -rf .pnpm-lock.yaml && rm -rf dist"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "1.2.2",
