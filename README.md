@@ -15,7 +15,7 @@ La aplicación está disponible en producción en:
 - 🔄 **Estado Global**: Gestión de estado con React Query
 - 🛠️ **Componentes Radix UI**: Interfaz de usuario accesible y moderna
 - 🧪 **Testing**: Pruebas automatizadas con Vitest (en desarrollo)
-- 📦 **Herramientas de Desarrollo**: ESLint, Prettier y Husky
+- 📦 **Herramientas de Desarrollo**: ESLint, Prettier, Conventional Commits y Husky
 
 ## Tecnologías Utilizadas
 
