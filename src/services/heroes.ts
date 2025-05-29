@@ -4,7 +4,7 @@ import type { HeroItem } from '../types/heroe';
 
 import type { HeroPage } from '@/query/types';
 
-const API_BASE_URL = 'https://ea1w717ym2.execute-api.us-east-1.amazonaws.com/api'; // Ejemplo de API
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const getAllForPage = async (page: number, size: number = 10): Promise<HeroPage> => {
   const res = await axios.get<HeroPage>(`${API_BASE_URL}/heroes`, {

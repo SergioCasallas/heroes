@@ -32,6 +32,21 @@ Aplicación web moderna para gestionar héroes usando React, TypeScript y Vite.
 pnpm install
 ```
 
+## Variables de Entorno
+
+El proyecto utiliza variables de entorno para configurar diferentes aspectos de la aplicación. Las
+variables principales son:
+
+- `VITE_API_BASE_URL`: URL base de la API
+- `VITE_ENV`: Entorno de ejecución (development/production)
+- Variables adicionales según la funcionalidad implementada
+
+Para configurar las variables de entorno:
+
+1. Copia el archivo `.env.example` a `.env`
+2. Modifica las variables según tu configuración
+3. Las variables de entorno deben comenzar con `VITE_` para ser accesibles en el frontend
+
 ## Scripts Disponibles
 
 - `pnpm dev`: Inicia el servidor de desarrollo
