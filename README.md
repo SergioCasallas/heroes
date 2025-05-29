@@ -13,7 +13,7 @@ Aplicación web moderna para gestionar héroes usando React, TypeScript y Vite.
 
 ## Tecnologías Utilizadas
 
-- **Frontend**: React 18, TypeScript, Vite
+- **Frontend**: React 19, TypeScript, Vite
 - **UI Components**: Radix UI
 - **Estilos**: Tailwind CSS
 - **Gestión de Estado**: React Query
