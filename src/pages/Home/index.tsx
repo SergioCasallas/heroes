@@ -1,48 +1,43 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // eslint-disable-next-line import/extensions
 import CardHero from '@/components/CardHero';
 // eslint-disable-next-line import/extensions
 import { Button } from '@/components/ui/button';
-import type { HeroItem } from '@/types/heroe.tsx';
-
-interface HeroPage {
-  length: number;
-  size: number;
-  page: number;
-  firstPage: number;
-  lastPage: number;
-  items: HeroItem[];
-}
+import { QUERY_KEYS, useCustomQuery } from '@/query/index.ts';
+import type { HeroPage } from '@/query/types.ts';
+import { getAllForPage } from '@/services/heroes.ts';
+import type { ApiError } from '@/types/error.ts';
+// import type { HeroItem } from '@/types/heroe.tsx';
 
 const Home = () => {
-  const [pageData, setPageData] = useState<HeroPage>({
-    length: 0,
-    size: 10,
-    page: 1,
-    firstPage: 1,
-    lastPage: 1,
-    items: [],
-  });
-  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  const fetchPage = async (page: number, size = 10) => {
-    setLoading(true);
-    const res = await fetch(
-      `https://ea1w717ym2.execute-api.us-east-1.amazonaws.com/api/heroes?size=${size}&page=${page}`,
-    );
-    const data: HeroPage = await res.json();
-    setPageData(data);
-    setLoading(false);
-  };
+  // const [pageData, setPageData] = useState<HeroPage>({
+  //   length: 0,
+  //   size: 10,
+  //   page: 1,
+  //   firstPage: 1,
+  //   lastPage: 1,
+  //   items: [],
+  // });
+  // const [loading, setLoading] = useState(false);
 
-  // carga inicial
-  useEffect(() => {
-    fetchPage(1);
-  }, []);
+  const {
+    data: heroPage,
+    isLoading,
+    // isError,
+    // error,
+  } = useCustomQuery<HeroPage, ApiError>(
+    [QUERY_KEYS.HEROES, currentPage, pageSize],
+    () => getAllForPage(currentPage, pageSize),
+    {
+      refetchOnWindowFocus: true,
+    },
+  );
 
-  const { page, lastPage, items } = pageData;
+  const totalPages = heroPage?.lastPage ?? 1;
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 flex items-center justify-center scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500">
@@ -57,42 +52,36 @@ const Home = () => {
             </p>
           </div>
         </div>
-        <CardHero heroes={items} />
+        <CardHero heroes={heroPage?.items || []} />
 
         <div className="flex items-center justify-center space-x-2 mt-8">
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => fetchPage(page - 1)}
-            disabled={page === 1 || loading}
-            className="flex items-center gap-2"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1 || isLoading}
+            className="cursor-pointer"
           >
-            <ChevronLeft className="h-4 w-4" />
-            Back
+            ← Back
           </Button>
 
-          {Array.from({ length: lastPage }, (_, i) => i + 1).map((p) => (
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
             <Button
               key={p}
-              disabled={loading}
-              variant={p === page ? 'default' : 'outline'}
+              disabled={isLoading}
+              variant={p === currentPage ? 'default' : 'outline'}
               size="sm"
-              onClick={() => fetchPage(p)}
-              className="w-10 h-10"
+              onClick={() => setCurrentPage(p)}
+              className="w-10 h-10 cursor-pointer"
             >
               {p}
             </Button>
           ))}
 
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => fetchPage(page + 1)}
-            disabled={page === lastPage || loading}
-            className="flex items-center gap-2"
+            className="cursor-pointer"
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages || isLoading}
           >
-            Next
-            <ChevronRight className="h-4 w-4" />
+            Next →
           </Button>
         </div>
       </div>
