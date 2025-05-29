@@ -1,4 +1,4 @@
-export { QUERY_KEYS } from './constants.ts';
-export { useCustomMutation, useCustomQuery } from './hooks.ts';
-export { default as queryClient } from './queryClient.ts';
-export type { ApiError, CreateHeroPayload, UpdateHeroPayload } from './types.ts';
+export { QUERY_KEYS } from './constants';
+export { useCustomMutation, useCustomQuery } from './hooks';
+export { default as queryClient } from './queryClient';
+export type { ApiError, CreateHeroPayload, UpdateHeroPayload } from './types';

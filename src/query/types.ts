@@ -1,6 +1,6 @@
-// src/query/types.ts
+// src/query/types
 
-import type { HeroItem } from '../types/heroe.tsx';
+import type { HeroItem } from '../types/heroe';
 
 // Define la estructura de un error de API genérico
 export interface ApiError {
@@ -20,4 +20,6 @@ export interface HeroPage {
   totalPages: number;
   size: number;
   number: number;
+  items: HeroItem[];
+  lastPage: number;
 }

@@ -126,17 +126,7 @@ export default tsEslint.config(
           ],
         },
       ],
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-          js: 'always',
-          mjs: 'never',
-          ts: 'always',
-        },
-      ],
       'import/no-unresolved': 'off',
-      // ...otras reglas específicas de tu proyecto
     },
     settings: {
       'import/resolver': {
@@ -151,7 +141,6 @@ export default tsEslint.config(
           extensions: ['.ts', '.json'],
         },
       },
-      'import/extensions': ['.ts', '.mjs'],
     },
   },
 );

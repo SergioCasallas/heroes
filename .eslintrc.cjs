@@ -54,13 +54,13 @@ module.exports = {
     // Prettier
     'prettier/prettier': 'error',
     // Import extensions solo para paquetes (alias y archivos TS los ignora)
-    'import/extensions': ['error', 'ignorePackages', {
-      js: 'never', jsx: 'never', ts: 'never', tsx: 'never'
-    }],
+    // 'import/extensions': ['error', 'ignorePackages', {
+    //   js: 'never', jsx: 'never', ts: 'never', tsx: 'never'
+    // }],
   },
   settings: {
     react: { version: 'detect' },
-    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+    // 'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
     'import/resolver': {
       // 1️⃣ Resolver Node nativo (para .ts/.tsx/.js/.jsx)
       node: {
@@ -81,7 +81,8 @@ module.exports = {
   overrides: [
     {
       // Desactivar import/extensions en archivos TS/TSX
-      files: ['*.ts', '*.tsx'],
+      files: ['**/*.{ts,tsx}'],
+
       rules: {
         'import/extensions': 'off'
       }

@@ -1,14 +1,15 @@
 {
   "files": [],
-  "include": ["src/**/*"],
+  // "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules", "**/*.d.ts"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  }
+  ]
+  // "compilerOptions": {
+  //   "baseUrl": ".",
+  //   "paths": {
+  //     "@/*": ["src/*"]
+  //   }
+  // }
 }

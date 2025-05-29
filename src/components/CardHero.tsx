@@ -2,12 +2,12 @@ import { Separator } from '@radix-ui/react-context-menu';
 import { Progress } from '@radix-ui/react-progress';
 import { useState } from 'react';
 
-import { Badge } from './ui/badge.tsx';
-import { Card, CardContent, CardHeader } from './ui/card.tsx';
-import { HeroDialog } from './Dialog.tsx';
+import { Badge } from './ui/badge';
+import { Card, CardContent, CardHeader } from './ui/card';
+import { HeroDialog } from './Dialog';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar.tsx';
-import type { HeroItem } from '@/types/heroe.tsx';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import type { HeroItem } from '@/types/heroe';
 
 interface CardHeroProps {
   heroes: HeroItem[];

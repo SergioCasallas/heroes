@@ -1,4 +1,4 @@
-// src/query/queryClient.ts
+// src/query/queryClient
 import { QueryClient } from '@tanstack/react-query';
 
 import type { ApiError } from './types.js';

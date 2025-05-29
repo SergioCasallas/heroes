@@ -1,4 +1,4 @@
-// src/query/hooks.ts
+// src/query/hooks
 import {
   type QueryKey,
   useMutation,
@@ -7,7 +7,6 @@ import {
   type UseQueryOptions,
 } from '@tanstack/react-query';
 
-// eslint-disable-next-line import/extensions
 import queryClient from './queryClient';
 import type { ApiError } from './types'; // Importa tu tipo de error
 

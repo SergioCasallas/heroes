@@ -3,8 +3,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import './styles/globals.css';
 
-import Home from './pages/Home/index.tsx';
-import queryClient from './query/queryClient.ts';
+import Home from './pages/Home/index';
+import queryClient from './query/queryClient';
 
 function App() {
   return (

@@ -1,14 +1,9 @@
 import { useState } from 'react';
 
-// eslint-disable-next-line import/extensions
 import CardHero from '@/components/CardHero';
-// eslint-disable-next-line import/extensions
 import { Button } from '@/components/ui/button';
-import { QUERY_KEYS, useCustomQuery } from '@/query/index.ts';
-import type { HeroPage } from '@/query/types.ts';
-import { getAllForPage } from '@/services/heroes.ts';
-import type { ApiError } from '@/types/error.ts';
-// import type { HeroItem } from '@/types/heroe.tsx';
+import { QUERY_KEYS, useCustomQuery } from '@/query/index';
+import { getAllForPage } from '@/services/heroes';
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,19 +19,9 @@ const Home = () => {
   // });
   // const [loading, setLoading] = useState(false);
 
-  const {
-    data: heroPage,
-    isLoading,
-    // isError,
-    // error,
-  } = useCustomQuery<HeroPage, ApiError>(
-    [QUERY_KEYS.HEROES, currentPage, pageSize],
-    () => getAllForPage(currentPage, pageSize),
-    {
-      refetchOnWindowFocus: true,
-    },
+  const { data: heroPage, isLoading } = useCustomQuery([QUERY_KEYS.HEROES, currentPage], () =>
+    getAllForPage(currentPage, pageSize),
   );
-
   const totalPages = heroPage?.lastPage ?? 1;
 
   return (

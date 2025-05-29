@@ -1,49 +1,35 @@
 import { Avatar } from '@radix-ui/react-avatar';
 import React from 'react';
 
-import { AvatarFallback, AvatarImage } from '@/components/ui/avatar.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog.tsx';
-import { Progress } from '@/components/ui/progress.tsx';
+import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Progress } from '@/components/ui/progress';
+import { QUERY_KEYS } from '@/query/constants';
+import { useCustomQuery } from '@/query/index';
+import { getOne } from '@/services/heroes';
+import type { ApiError } from '@/types/error';
+import type { HeroItem } from '@/types/heroe';
 
-export interface Hero {
-  id: string;
-  name: string;
-  images: { lg?: string };
-  biography: {
-    alignment: string;
-    fullName: string;
-    firstAppearance: string;
-    placeOfBirth: string;
-    publisher: string;
-    alterEgos: string;
-    aliases: string[];
-  };
-  appearance: {
-    gender: string;
-    race?: string;
-    height: [string, string];
-    weight: [string, string];
-    eyeColor: string;
-    hairColor: string;
-  };
-  work: {
-    occupation: string;
-    base: string;
-  };
-  connections: {
-    groupAffiliation: string;
-    relatives: string;
-  };
-  powerstats: Record<string, number>;
-}
-
-interface HeroDialogProps {
-  hero: Hero | null;
+export interface HeroDialogProps {
+  hero: HeroItem | null;
   onClose: () => void;
 }
 
 export const HeroDialog: React.FC<HeroDialogProps> = ({ hero, onClose }) => {
+  const idToFetch = hero?.id;
+
+  const isIdValid = typeof idToFetch === 'number' && !isNaN(idToFetch);
+
+  const { data: heroDialog } = useCustomQuery<HeroItem, ApiError, HeroItem, [string, number]>(
+    [QUERY_KEYS.HERO, idToFetch || 0],
+    () => getOne(idToFetch || 0),
+    {
+      enabled: isIdValid,
+      queryKey: [QUERY_KEYS.HERO, idToFetch || 0],
+    },
+  );
+
   const getAlignmentColor = (alignment: string) => {
     switch (alignment) {
       case 'good':
@@ -57,7 +43,7 @@ export const HeroDialog: React.FC<HeroDialogProps> = ({ hero, onClose }) => {
     }
   };
   return (
-    <Dialog open={!!hero} onOpenChange={onClose}>
+    <Dialog open={!!heroDialog} onOpenChange={onClose}>
       <DialogContent
         className="
         bg-white p-10 max-w-4xl max-h-[90vh] overflow-y-auto
@@ -67,33 +53,32 @@ export const HeroDialog: React.FC<HeroDialogProps> = ({ hero, onClose }) => {
           hover:scrollbar-thumb-gray-500
       "
       >
-        {hero && (
+        {heroDialog && (
           <>
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold">{hero.name}</DialogTitle>
+              <DialogTitle className="text-2xl font-bold">{heroDialog?.name}</DialogTitle>
             </DialogHeader>
             <div className="grid md:grid-cols-2 gap-6">
-              {/* IZQUIERDA: Imagen y Badges */}
               <div className="space-y-4">
                 <div className="aspect-square overflow-hidden rounded-lg">
                   <Avatar className="h-[300px] w-full overflow-hidden transition-transform group-hover:scale-110">
                     <AvatarImage
-                      src={hero.images.lg}
-                      alt={hero.name}
+                      src={heroDialog?.images?.lg}
+                      alt={heroDialog?.name || 'Hero'}
                       className="h-full w-full object-cover"
                     />
                     <AvatarFallback className="text-white bg-muted-foreground">
-                      {hero.name.charAt(0)}
+                      {heroDialog?.name?.charAt(0) || 'H'}
                     </AvatarFallback>
                   </Avatar>
                 </div>
                 <div className="flex gap-2">
                   <Badge
-                    className={`${getAlignmentColor(hero.biography.alignment)} text-white border-0`}
+                    className={`${getAlignmentColor(heroDialog?.biography?.alignment)} text-white border-0`}
                   >
-                    {hero.biography.alignment.toUpperCase()}
+                    {heroDialog?.biography?.alignment?.toUpperCase()}
                   </Badge>
-                  <Badge variant="secondary">{hero.biography.publisher}</Badge>
+                  <Badge variant="secondary">{heroDialog?.biography?.publisher}</Badge>
                 </div>
               </div>
 
@@ -101,19 +86,19 @@ export const HeroDialog: React.FC<HeroDialogProps> = ({ hero, onClose }) => {
               <div className="space-y-6">
                 {/* Biography */}
                 <Section title="Biography">
-                  <Field label="Full Name" value={hero.biography.fullName} />
-                  <Field label="First Appearance" value={hero.biography.firstAppearance} />
-                  <Field label="Place of Birth" value={hero.biography.placeOfBirth} />
-                  <Field label="Publisher" value={hero.biography.publisher} />
-                  {hero.biography.alterEgos !== 'No alter egos found' && (
-                    <Field label="Alter Egos" value={hero.biography.alterEgos} />
+                  <Field label="Full Name" value={heroDialog?.biography.fullName} />
+                  <Field label="First Appearance" value={heroDialog?.biography.firstAppearance} />
+                  <Field label="Place of Birth" value={heroDialog?.biography.placeOfBirth} />
+                  <Field label="Publisher" value={heroDialog?.biography.publisher} />
+                  {heroDialog?.biography.alterEgos !== 'No alter egos found' && (
+                    <Field label="Alter Egos" value={heroDialog?.biography.alterEgos} />
                   )}
                 </Section>
 
                 {/* Aliases */}
                 <Section title="Aliases">
                   <div className="flex flex-wrap gap-2">
-                    {hero.biography.aliases.map((alias) => (
+                    {heroDialog?.biography.aliases.map((alias) => (
                       <Badge key={alias} variant="outline">
                         {alias}
                       </Badge>
@@ -124,25 +109,28 @@ export const HeroDialog: React.FC<HeroDialogProps> = ({ hero, onClose }) => {
                 {/* Physical Appearance */}
                 <Section title="Physical Appearance">
                   <div className="grid grid-cols-2 gap-2 text-sm">
-                    <Field label="Gender" value={hero.appearance.gender} />
-                    <Field label="Race" value={hero.appearance.race || 'Unknown'} />
-                    <Field label="Height" value={hero.appearance.height.join(' / ')} />
-                    <Field label="Weight" value={hero.appearance.weight.join(' / ')} />
-                    <Field label="Eye Color" value={hero.appearance.eyeColor} />
-                    <Field label="Hair Color" value={hero.appearance.hairColor} />
+                    <Field label="Gender" value={heroDialog?.appearance.gender} />
+                    <Field label="Race" value={heroDialog?.appearance.race || 'Unknown'} />
+                    <Field label="Height" value={heroDialog?.appearance.height.join(' / ')} />
+                    <Field label="Weight" value={heroDialog?.appearance.weight.join(' / ')} />
+                    <Field label="Eye Color" value={heroDialog?.appearance.eyeColor} />
+                    <Field label="Hair Color" value={heroDialog?.appearance.hairColor} />
                   </div>
                 </Section>
 
                 {/* Work & Base */}
                 <Section title="Work & Base">
-                  <Field label="Occupation" value={hero.work.occupation} />
-                  <Field label="Base" value={hero.work.base} />
+                  <Field label="Occupation" value={heroDialog?.work.occupation} />
+                  <Field label="Base" value={heroDialog?.work.base} />
                 </Section>
 
                 {/* Connections */}
                 <Section title="Connections">
-                  <Field label="Group Affiliation" value={hero.connections.groupAffiliation} />
-                  <Field label="Relatives" value={hero.connections.relatives} />
+                  <Field
+                    label="Group Affiliation"
+                    value={heroDialog?.connections.groupAffiliation}
+                  />
+                  <Field label="Relatives" value={heroDialog?.connections.relatives} />
                 </Section>
               </div>
             </div>
@@ -151,7 +139,7 @@ export const HeroDialog: React.FC<HeroDialogProps> = ({ hero, onClose }) => {
             <div className="mt-6">
               <h3 className="text-lg font-semibold mb-4">Power Statistics</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {Object.entries(hero.powerstats).map(([stat, value]) => (
+                {Object.entries(heroDialog?.powerstats).map(([stat, value]) => (
                   <div key={stat} className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="capitalize font-medium">{stat}</span>
