@@ -1,63 +1,82 @@
-# React + TypeScript + Vite
+# Heroes App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web moderna para gestionar héroes usando React, TypeScript y Vite.
 
-Currently, two official plugins are available:
+## Características Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react)
-  uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc)
-  uses [SWC](https://swc.rs/) for Fast Refresh
+- 🚀 **Frontend Moderno**: Construido con React y TypeScript
+- 📱 **Responsive Design**: Diseño adaptable usando Tailwind CSS
+- 🔄 **Estado Global**: Gestión de estado con React Query
+- 🛠️ **Componentes Radix UI**: Interfaz de usuario accesible y moderna
+- 🧪 **Testing**: Pruebas automatizadas con Vitest (en desarrollo)
+- 📦 **Herramientas de Desarrollo**: ESLint, Prettier y Husky
 
-## Expanding the ESLint configuration
+## Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable
-type-aware lint rules:
+- **Frontend**: React 18, TypeScript, Vite
+- **UI Components**: Radix UI
+- **Estilos**: Tailwind CSS
+- **Gestión de Estado**: React Query
+- **HTTP Client**: Axios
+- **Testing**: Vitest
+- **Linter**: ESLint
+- **Formatter**: Prettier
+- **Git Hooks**: Husky
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+## Instalación
+
+1. Clona el repositorio
+2. Instala las dependencias:
+
+```bash
+pnpm install
 ```
 
-You can also install
-[eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x)
-and
-[eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom)
-for React-specific lint rules:
+## Scripts Disponibles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+- `pnpm dev`: Inicia el servidor de desarrollo
+- `pnpm build`: Construye la aplicación para producción
+- `pnpm preview`: Previsualiza la build de producción
+- `pnpm lint`: Ejecuta el linter
+- `pnpm format`: Formatea los archivos
+- `pnpm test`: Ejecuta las pruebas
+- `pnpm clean`: Limpia el proyecto
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
+## Estructura del Proyecto
+
+```
+src/
+├── components/     # Componentes reutilizables
+├── pages/         # Páginas principales
+├── services/      # Servicios y APIs
+├── query/         # Configuración de React Query
+├── types/         # Tipos TypeScript
+└── styles/        # Estilos globales
 ```
 
-# template-react-ts
+## API
+
+La aplicación consume una API REST que proporciona los siguientes endpoints:
+
+- `GET /heroes`: Lista de héroes paginada
+- `GET /hero`: Detalles de un héroe específico
+
+## Estado del Proyecto
+
+El proyecto está en desarrollo activo y actualmente implementa las siguientes funcionalidades:
+
+- Listado de héroes con paginación
+- Detalles de héroes
+- Componentes UI accesibles usando Radix UI
+- Caché y gestión de estado con React Query
+
+## Contribución
+
+1. Crea un branch para tu feature (`git checkout -b feature/amazing-feature`)
+2. Commit tus cambios (`git commit -m 'Add some amazing feature'`)
+3. Push al branch (`git push origin feature/amazing-feature`)
+4. Abre un Pull Request
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT - consulta el archivo LICENSE para más detalles.
